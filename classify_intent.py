@@ -93,6 +93,46 @@ for i in range(50):
 final_scores = model(X, W, b)
 predicted_labels = mx.argmax(final_scores, axis=1)
 
-print("\n--- Model Predictions ---")
-print("Correct labels:   ", labels)
-print("Predicted labels: ", predicted_labels)
+# print("\n--- Model Predictions ---")
+# print("Correct labels:   ", labels)
+# print("Predicted labels: ", predicted_labels)
+
+new_sentence = "will today be sunny"
+
+# vectorization
+new_vector = [0] * len(vocabulary)
+words_in_sentence = new_sentence.split()
+for word in words_in_sentence:
+    if word in vocabulary:
+        index = vocabulary.index(word)  # index of timer maybe 28
+        new_vector[index] = 1  # word found
+
+new_vector = mx.array(new_vector)
+
+new_scores = model(new_vector, W, b)
+new_predicted_label = mx.argmax(new_scores)
+
+
+# print("\n--- New Model Predictions ---")
+# print("New sentence:   ", new_sentence)
+# print("Predicted labels: ", new_predicted_label.item())
+
+
+# Testing 2nd sentence
+second_sentence = "play a song for me"
+
+# vectorisation
+second_vector = [0] * len(vocabulary)
+words_in_sentence = second_sentence.split()
+for word in words_in_sentence:
+    if word in vocabulary:
+        index = vocabulary.index(word)  # index of timer maybe 28
+        second_vector[index] = 1  # word found
+
+second_vector = mx.array(second_vector)
+second_score = model(second_vector, W, b)
+second_predicted_label = mx.argmax(second_score)
+
+print("\n--- New Model Predictions ---")
+print("New sentence:   ", second_sentence)
+print("Predicted labels: ", second_predicted_label.item())
